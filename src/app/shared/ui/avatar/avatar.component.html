@@ -1,0 +1,8 @@
+    <div class="avatar" [class.ring]="ring()" [style.width.px]="size()" [style.height.px]="size()">
+      @if (src(); as url) {
+        <img [ngSrc]="url" [width]="size()" [height]="size()" [alt]="alt()" />
+      } @else {
+        <span class="fallback">{{ initials() }}</span>
+      }
+    </div>
+  

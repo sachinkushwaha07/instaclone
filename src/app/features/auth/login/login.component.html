@@ -1,0 +1,21 @@
+    <div class="wrap">
+      <h1 class="logo">InstaClone</h1>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <input formControlName="identifier" placeholder="Phone number, username, or email" autocomplete="username" />
+        <input formControlName="password" type="password" placeholder="Password" autocomplete="current-password" />
+
+        @if (errorMessage(); as msg) {
+          <p class="error">{{ msg }}</p>
+        }
+
+        <ui-button variant="primary" [disabled]="form.invalid" [loading]="submitting()">
+          Log in
+        </ui-button>
+      </form>
+
+      <p class="demo-credentials">Demo: <strong>demo&#64;instaclone.local</strong> / <strong>demo123</strong></p>
+
+      <p class="switch">Don't have an account? <a routerLink="/auth/register">Sign up</a></p>
+    </div>
+  

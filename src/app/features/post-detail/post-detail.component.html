@@ -1,0 +1,5 @@
+    @if (post(); as p) {
+      <app-post-card [post]="p" (like)="onLike($event)" />
+    }
+    <!-- TODO: comments thread, loaded via a paginated CommentsApi -->
+  

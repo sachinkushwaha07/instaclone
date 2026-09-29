@@ -1,0 +1,9 @@
+    <div class="wrap">
+      <input type="file" accept="image/*,video/*" (change)="onFile($event)" />
+      @if (fileName(); as name) {
+        <p>Selected: {{ name }}</p>
+        <textarea placeholder="Write a caption..." [(ngModel)]="caption" name="caption"></textarea>
+        <ui-button [loading]="uploading()" (clicked)="share()">Share</ui-button>
+      }
+    </div>
+  

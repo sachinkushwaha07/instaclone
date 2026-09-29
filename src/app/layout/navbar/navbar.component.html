@@ -1,0 +1,18 @@
+<header class="navbar">
+  <a routerLink="/" class="logo">InstaClone</a>
+  <input class="search" type="search" placeholder="Search" aria-label="Search" />
+  <nav class="links" aria-label="Primary navigation">
+    <a routerLink="/">Home</a>
+    <a routerLink="/messages">Messages</a>
+    <a routerLink="/live">Live</a>
+    <a routerLink="/notifications" class="bell" aria-label="Notifications">
+      <fa-icon [icon]="faBell" />
+      @if (notifications.unreadCount() > 0) {
+        <span class="badge">{{ notifications.unreadCount() > 99 ? '99+' : notifications.unreadCount() }}</span>
+      }
+    </a>
+    <a [routerLink]="['/profile', auth.user()?.username]" aria-label="Your profile">
+      <ui-avatar [src]="auth.user()?.avatarUrl ?? null" [size]="28" [initials]="auth.initials()" />
+    </a>
+  </nav>
+</header>

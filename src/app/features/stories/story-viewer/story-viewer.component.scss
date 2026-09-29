@@ -1,0 +1,11 @@
+    .viewer { position: fixed; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; }
+    img { max-width: 100%; max-height: 100%; }
+    .progress-row { position: absolute; top: 8px; left: 8px; right: 8px; display: flex; gap: 4px; z-index: 2; }
+    .bar { flex: 1; height: 2px; background: rgba(255,255,255,0.35); border-radius: 2px; }
+    .bar.done { background: #fff; }
+    .bar.active { background: #fff; }
+    .zone { position: absolute; top: 0; bottom: 0; width: 30%; background: transparent; border: none; z-index: 1; }
+    .zone.left { left: 0; }
+    .zone.right { right: 0; }
+    .close { position: absolute; top: 8px; right: 8px; z-index: 2; background: none; border: none; color: #fff; font-size: 20px; }
+  

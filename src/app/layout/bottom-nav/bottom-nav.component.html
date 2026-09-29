@@ -1,0 +1,17 @@
+<nav class="bottom-nav" aria-label="Primary navigation">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" aria-label="Home">
+    <fa-icon [icon]="faHouse" />
+  </a>
+  <a routerLink="/explore" routerLinkActive="active" aria-label="Explore">
+    <fa-icon [icon]="faMagnifyingGlass" />
+  </a>
+  <a routerLink="/create" routerLinkActive="active" aria-label="Create post">
+    <fa-icon [icon]="faPlusSquare" />
+  </a>
+  <a routerLink="/live" routerLinkActive="active" aria-label="Live video">
+    <fa-icon [icon]="faVideo" />
+  </a>
+  <a [routerLink]="['/profile', auth.user()?.username]" routerLinkActive="active" aria-label="Your profile">
+    <span class="me">{{ auth.initials() }}</span>
+  </a>
+</nav>

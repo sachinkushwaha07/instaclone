@@ -1,0 +1,21 @@
+    <div class="feed">
+      <app-story-tray />
+
+      @for (post of store.posts(); track post.id) {
+        <app-post-card [post]="post" (like)="store.toggleLike($event)" (openComments)="openPost($event)" />
+      }
+
+      @if (store.loading()) {
+        @for (i of [1, 2, 3]; track i) {
+          <ui-skeleton height="480px" radius="8px" />
+        }
+      }
+
+      @if (store.error(); as error) {
+        <p class="error">{{ error }}</p>
+      }
+
+      <!-- Sentinel: crossing the viewport requests the next page. -->
+      <div appInfiniteScroll [disabled]="store.loading() || !store.hasMore()" (threshold)="store.loadMore()"></div>
+    </div>
+  

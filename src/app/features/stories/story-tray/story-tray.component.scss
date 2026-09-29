@@ -1,0 +1,5 @@
+    .tray { display: flex; gap: var(--space-3); overflow-x: auto; padding: var(--space-2); scrollbar-width: none; }
+    .tray::-webkit-scrollbar { display: none; }
+    .entry { display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; }
+    .name { font-size: 11px; color: var(--color-text); max-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  

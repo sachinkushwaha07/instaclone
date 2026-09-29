@@ -1,8 +1,3 @@
-import { RenderMode, ServerRoute } from '@angular/ssr';
-
-export const serverRoutes: ServerRoute[] = [
-  {
-    path: '**',
-    renderMode: RenderMode.Prerender
-  }
-];
+// Angular 18 does not provide route-level render modes. SSR is configured in
+// app.config.server.ts through provideServerRendering().
+export const serverRoutes = [];

@@ -1,0 +1,23 @@
+    <div class="wrap">
+      <h1>Notifications</h1>
+      @for (n of store.items(); track n.id) {
+        <div class="row" [class.unread]="!n.read">
+          <span>
+            <strong>{{ n.actorUsername }}</strong>
+            @switch (n.type) {
+              @case ('like') { liked your post }
+              @case ('comment') { commented on your post }
+              @case ('follow') { started following you }
+              @case ('live_started') { is live now }
+              @case ('mention') { mentioned you }
+            }
+          </span>
+          <span class="time">{{ n.createdAt | timeAgo }}</span>
+        </div>
+      } @empty {
+        @if (!store.loading()) { <p class="empty">No notifications yet.</p> }
+      }
+      @if (store.error(); as error) { <p class="error">{{ error }}</p> }
+      <div appInfiniteScroll [disabled]="store.loading() || !store.hasMore()" (threshold)="store.loadMore()"></div>
+    </div>
+  

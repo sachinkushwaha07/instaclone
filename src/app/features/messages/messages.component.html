@@ -1,0 +1,34 @@
+    <div class="layout">
+      <aside class="list">
+        @for (c of conversations(); track c.id) {
+          <button class="conv" [class.active]="c.id === activeId()" (click)="openThread(c.id)">
+            <span>{{ c.lastMessage ?? 'Say hello' }}</span>
+            @if (c.unreadCount > 0) {
+              <span class="badge">{{ c.unreadCount }}</span>
+            }
+          </button>
+        }
+      </aside>
+
+      <section class="thread">
+        @if (activeId()) {
+          <div class="log">
+            @for (m of messages(); track m.id) {
+              <p class="msg" [class.mine]="m.senderId === auth.user()?.id">
+                {{ m.text }}
+                @if (m.status === 'sending') {
+                  <span class="pending">·</span>
+                }
+              </p>
+            }
+          </div>
+          <form (ngSubmit)="send()">
+            <input [(ngModel)]="draft" name="draft" placeholder="Message..." />
+            <ui-button variant="ghost" [disabled]="!draft.trim()">Send</ui-button>
+          </form>
+        } @else {
+          <p class="empty">Select a conversation</p>
+        }
+      </section>
+    </div>
+  

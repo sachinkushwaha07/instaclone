@@ -1,0 +1,11 @@
+    .header { display: flex; gap: var(--space-4); padding: var(--space-4); max-width: 700px; margin: 0 auto; }
+    .info { flex: 1; }
+    .row { display: flex; align-items: center; gap: var(--space-3); }
+    h1 { font-size: 20px; font-weight: 400; margin: 0; }
+    .live-pill { background: var(--color-danger); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+    .stats { display: flex; gap: var(--space-4); margin: var(--space-2) 0; font-size: 14px; }
+    .bio { font-size: 14px; margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; max-width: 935px; margin: 0 auto; }
+    .thumb { aspect-ratio: 1 / 1; display: block; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  

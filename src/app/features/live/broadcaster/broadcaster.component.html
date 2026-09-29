@@ -1,0 +1,21 @@
+    <div class="wrap">
+      <video #preview autoplay muted playsinline></video>
+
+      @switch (state()) {
+        @case ('setup') {
+          <input [(ngModel)]="title" placeholder="Add a title..." />
+          <ui-button (clicked)="goLive()">Start Live Video</ui-button>
+        }
+        @case ('connecting') {
+          <p>Connecting…</p>
+        }
+        @case ('live') {
+          <p class="live-badge">● LIVE · {{ viewerCount() }} watching</p>
+          <ui-button variant="danger" (clicked)="end()">End Live Video</ui-button>
+        }
+        @case ('error') {
+          <p class="error">Couldn't access your camera. Check permissions and try again.</p>
+        }
+      }
+    </div>
+  

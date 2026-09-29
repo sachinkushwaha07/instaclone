@@ -1,0 +1,38 @@
+<article class="card">
+  <header class="head">
+    <ui-avatar [src]="post().author.avatarUrl" [size]="32" [initials]="post().author.username[0]" />
+    <span class="username">{{ post().author.username }}</span>
+    <span class="time">{{ post().createdAt | timeAgo }}</span>
+  </header>
+
+  @if (post().media[0]; as media) {
+    <div class="media">
+      <img [ngSrc]="media.fullUrl" [width]="media.width" [height]="media.height" priority="false" alt="" />
+    </div>
+  }
+
+  <div class="actions">
+    <button
+      class="icon-btn"
+      [class.liked]="post().likedByMe"
+      [attr.aria-pressed]="post().likedByMe"
+      [attr.aria-label]="post().likedByMe ? 'Unlike post' : 'Like post'"
+      (click)="like.emit(post().id)"
+    >
+      <fa-icon [icon]="post().likedByMe ? faHeart : faHeartRegular" />
+    </button>
+    <button class="icon-btn" aria-label="View comments" (click)="openComments.emit(post().id)">
+      <fa-icon [icon]="faComment" />
+    </button>
+  </div>
+
+  <div class="meta">
+    <strong>{{ post().likeCount }} likes</strong>
+    <p class="caption"><strong>{{ post().author.username }}</strong> {{ post().caption }}</p>
+    @if (post().commentCount > 0) {
+      <button class="view-comments" (click)="openComments.emit(post().id)">
+        View all {{ post().commentCount }} comments
+      </button>
+    }
+  </div>
+</article>

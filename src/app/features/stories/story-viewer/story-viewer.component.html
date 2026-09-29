@@ -1,0 +1,16 @@
+    @if (group(); as g) {
+      <div class="viewer">
+        <div class="progress-row">
+          @for (s of g.stories; track s.id; let i = $index) {
+            <div class="bar" [class.done]="i < index()" [class.active]="i === index()"></div>
+          }
+        </div>
+        <button class="zone left" (click)="prev()" aria-label="Previous story"></button>
+        <button class="zone right" (click)="next()" aria-label="Next story"></button>
+        @if (current(); as story) {
+          <img [src]="story.mediaUrl" alt="" />
+        }
+        <button class="close" (click)="close()">✕</button>
+      </div>
+    }
+  

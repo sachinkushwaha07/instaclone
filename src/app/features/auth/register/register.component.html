@@ -1,0 +1,37 @@
+    <div class="wrap">
+      <h1 class="logo">InstaClone</h1>
+      <p class="tagline">Sign up to see photos and videos from your friends.</p>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <input formControlName="email" type="email" placeholder="Email" autocomplete="email" />
+        @if (showError('email')) {
+          <small class="error">Enter a valid email address.</small>
+        }
+
+        <input formControlName="displayName" placeholder="Full name" autocomplete="name" />
+
+        <input formControlName="username" placeholder="Username" autocomplete="username" />
+        @if (showError('username')) {
+          <small class="error">3-30 characters: letters, numbers, dots and underscores.</small>
+        }
+
+        <input formControlName="password" type="password" placeholder="Password" autocomplete="new-password" />
+        @if (showError('password')) {
+          <small class="error">Use at least 8 characters.</small>
+        }
+
+        <input formControlName="confirmPassword" type="password" placeholder="Confirm password" autocomplete="new-password" />
+        @if (form.hasError('passwordMismatch') && form.controls.confirmPassword.touched) {
+          <small class="error">Passwords don't match.</small>
+        }
+
+        @if (serverError(); as msg) {
+          <p class="error">{{ msg }}</p>
+        }
+
+        <ui-button variant="primary" [disabled]="form.invalid" [loading]="submitting()">Sign up</ui-button>
+      </form>
+
+      <p class="switch">Have an account? <a routerLink="/auth/login">Log in</a></p>
+    </div>
+  

@@ -1,0 +1,18 @@
+    <div class="room">
+      <video #player playsinline autoplay muted controls></video>
+
+      <div class="chat">
+        <div class="messages">
+          @for (msg of chatLog(); track $index) {
+            <p><strong>{{ msg.username }}</strong> {{ msg.text }}</p>
+          }
+        </div>
+        <form (ngSubmit)="send()">
+          <input [(ngModel)]="draft" name="draft" placeholder="Say something..." />
+          <ui-button variant="ghost" [disabled]="!draft.trim()">Send</ui-button>
+        </form>
+      </div>
+
+      <ui-button variant="secondary" (clicked)="leave()">Leave</ui-button>
+    </div>
+  

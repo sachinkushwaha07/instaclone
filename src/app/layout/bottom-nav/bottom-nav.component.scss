@@ -1,0 +1,11 @@
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      display: flex; justify-content: space-around; align-items: center;
+      height: 50px; background: var(--color-bg); border-top: 1px solid var(--color-border);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    a { font-size: 22px; text-decoration: none; opacity: 0.6; }
+    a.active { opacity: 1; }
+    .me { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--color-surface); font-size: 12px; }
+    @media (min-width: 768px) { .bottom-nav { display: none; } }
+  

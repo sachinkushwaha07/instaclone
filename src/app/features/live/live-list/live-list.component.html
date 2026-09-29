@@ -1,0 +1,14 @@
+    <div class="wrap">
+      <a routerLink="/go-live"><ui-button>Go Live</ui-button></a>
+
+      @for (session of sessions(); track session.roomId) {
+        <a class="row" [routerLink]="['/live', session.roomId]">
+          <span class="dot"></span>
+          <span>{{ session.hostUsername }} — {{ session.title }}</span>
+          <span class="count">{{ session.viewerCount }} watching</span>
+        </a>
+      } @empty {
+        <p class="empty">No one is live right now.</p>
+      }
+    </div>
+  
