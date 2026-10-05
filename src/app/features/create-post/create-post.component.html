@@ -3,6 +3,7 @@
       @if (fileName(); as name) {
         <p>Selected: {{ name }}</p>
         <textarea placeholder="Write a caption..." [(ngModel)]="caption" name="caption"></textarea>
+        @if (errorMessage(); as message) { <p class="error">{{ message }}</p> }
         <ui-button [loading]="uploading()" (clicked)="share()">Share</ui-button>
       }
     </div>

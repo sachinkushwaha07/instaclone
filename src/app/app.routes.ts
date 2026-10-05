@@ -21,6 +21,7 @@ export const routes: Routes = [
       { path: '', loadComponent: () => import('./features/feed/feed.component').then((m) => m.FeedComponent) },
       { path: 'explore', loadComponent: () => import('./features/explore/explore.component').then((m) => m.ExploreComponent) },
       { path: 'create', loadComponent: () => import('./features/create-post/create-post.component').then((m) => m.CreatePostComponent) },
+      { path: 'stories/create', loadComponent: () => import('./features/stories/create-story/create-story.component').then((m) => m.CreateStoryComponent) },
       { path: 'p/:postId', loadComponent: () => import('./features/post-detail/post-detail.component').then((m) => m.PostDetailComponent) },
       { path: 'stories/:userId', loadComponent: () => import('./features/stories/story-viewer/story-viewer.component').then((m) => m.StoryViewerComponent) },
       { path: 'live', loadComponent: () => import('./features/live/live-list/live-list.component').then((m) => m.LiveListComponent) },

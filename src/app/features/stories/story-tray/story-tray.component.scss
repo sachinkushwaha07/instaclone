@@ -1,5 +1,6 @@
     .tray { display: flex; gap: var(--space-3); overflow-x: auto; padding: var(--space-2); scrollbar-width: none; }
     .tray::-webkit-scrollbar { display: none; }
     .entry { display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; }
+    .add-story { text-decoration: none; }.add-ring { display: grid; place-items: center; width: 60px; height: 60px; border: 2px dashed var(--color-accent); border-radius: 50%; color: var(--color-accent); font-size: 28px; line-height: 1; }
     .name { font-size: 11px; color: var(--color-text); max-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   

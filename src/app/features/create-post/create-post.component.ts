@@ -28,6 +28,7 @@ export class CreatePostComponent {
 
   protected readonly fileName = signal<string | null>(null);
   protected readonly uploading = signal(false);
+  protected readonly errorMessage = signal<string | null>(null);
   protected caption = '';
   private file: File | null = null;
 
@@ -40,13 +41,16 @@ export class CreatePostComponent {
   async share(): Promise<void> {
     if (!this.file) return;
     this.uploading.set(true);
+    this.errorMessage.set(null);
     try {
       const { uploadUrl, key } = await firstValueFrom(
         this.api.requestUploadUrl(this.file.name, this.file.type)
       );
-      await fetch(uploadUrl, { method: 'PUT', body: this.file, headers: { 'Content-Type': this.file.type } });
+      await firstValueFrom(this.api.upload(uploadUrl, this.file));
       const post = await firstValueFrom(this.api.create({ mediaKeys: [key], caption: this.caption }));
       this.router.navigate(['/p', post.id]);
+    } catch {
+      this.errorMessage.set('Your post could not be uploaded. Please try again.');
     } finally {
       this.uploading.set(false);
     }

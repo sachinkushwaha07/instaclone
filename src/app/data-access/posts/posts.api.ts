@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Page } from '../page.model';
@@ -44,5 +44,12 @@ export class PostsApi {
    * storage directly, so large media never passes through this API. */
   requestUploadUrl(fileName: string, contentType: string): Observable<{ uploadUrl: string; key: string }> {
     return this.http.post<{ uploadUrl: string; key: string }>('/api/media/presign', { fileName, contentType });
+  }
+
+  /** Uses HttpClient rather than fetch so the app's auth interceptor adds the
+   * access token to local-development uploads. A cloud presigned URL would
+   * not require this header, but the component contract stays the same. */
+  upload(uploadUrl: string, file: File): Observable<void> {
+    return this.http.put<void>(uploadUrl, file, { headers: new HttpHeaders({ 'Content-Type': file.type }) });
   }
 }

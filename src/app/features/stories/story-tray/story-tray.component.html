@@ -1,4 +1,8 @@
     <div class="tray">
+      <a class="entry add-story" routerLink="/stories/create" aria-label="Add to your story">
+        <span class="add-ring">+</span>
+        <span class="name">Your story</span>
+      </a>
       @for (group of groups(); track group.user.id) {
         <button class="entry" (click)="openStory(group.user.id)">
           <ui-avatar [src]="group.user.avatarUrl" [size]="60" [ring]="group.hasUnseen" [initials]="group.user.username[0]" />

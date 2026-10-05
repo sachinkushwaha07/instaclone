@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AvatarComponent } from '../../../shared/ui/avatar/avatar.component';
 import { StoriesApi } from '../../../data-access/stories/stories.api';
 import { StoryGroup } from '../../../data-access/stories/story.model';
@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-story-tray',
   standalone: true,
-  imports: [AvatarComponent],
+  imports: [AvatarComponent, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './story-tray.component.html',
   styleUrl: './story-tray.component.scss',

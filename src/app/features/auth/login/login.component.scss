@@ -1,8 +1,18 @@
-    .wrap { max-width: 350px; margin: 60px auto; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-3); }
-    .logo { text-align: center; font-family: cursive; font-size: 32px; }
-    form { display: flex; flex-direction: column; gap: var(--space-2); border: 1px solid var(--color-border); padding: var(--space-4); border-radius: var(--radius-md); }
-    input { padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-surface); color: var(--color-text); }
-    .error { color: var(--color-danger); font-size: 13px; margin: 0; }
-    .demo-credentials { margin: 0; color: var(--color-text-muted); font-size: 12px; text-align: center; }
-    .switch { text-align: center; font-size: 14px; }
+.login-page { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 57%) minmax(420px, 43%); background: #fff; color: #111; }
+.showcase { position: relative; min-height: 720px; padding: 58px 64px; border-right: 2px solid #e5e7eb; overflow: hidden; }
+.brand, .mobile-brand { color: #111; text-decoration: none; font-size: 22px; font-weight: 700; letter-spacing: -.5px; display: inline-flex; align-items: center; gap: 8px; }
+.brand-mark { display: inline-grid; place-items: center; width: 46px; height: 46px; color: #fff; font-size: 42px; line-height: 1; border-radius: 14px; background: linear-gradient(35deg, #f9ce34, #ee2a7b 50%, #6228d7); }
+.hero-copy { max-width: 780px; margin: 120px auto 44px; text-align: center; font-size: clamp(38px, 4vw, 58px); line-height: 1.25; letter-spacing: -2px; font-weight: 400; }
+.hero-copy span { display: block; margin-top: 16px; background: linear-gradient(90deg, #ff5649, #df168d, #7b16df); background-clip: text; -webkit-background-clip: text; color: transparent; }
+.memory-stack { position: relative; width: 390px; height: 360px; margin: 0 auto; }
+.memory { position: absolute; width: 210px; height: 286px; border-radius: 28px; box-shadow: 0 16px 32px #0002; background-size: cover; background-position: center; }
+.memory-left { left: 14px; top: 42px; transform: rotate(-9deg); background-image: linear-gradient(#0000, #0005), url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=500&q=80'); }
+.memory-right { right: 14px; top: 40px; transform: rotate(9deg); background-image: linear-gradient(#0000, #0005), url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=500&q=80'); }
+.memory-main { z-index: 1; left: 90px; background-image: linear-gradient(#0000 55%, #0009), url('https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=500&q=80'); color: white; }
+.memory-main span { position: absolute; right: 22px; bottom: 22px; font-size: 30px; }.memory-main small { position: absolute; left: 20px; bottom: 24px; font-weight: 700; }
+.login-panel { display: grid; place-items: center; padding: 32px; }
+.login-card { width: min(100%, 682px); }.mobile-brand { display: none; }.login-card h1 { margin: 0 0 30px; font-size: 22px; }.login-card form { display: grid; gap: 15px; }
+label { display: grid; gap: 7px; color: #5a5a5a; font-size: 16px; } input { width: 100%; height: 76px; padding: 22px 20px 10px; border: 1px solid #a7a7a7; border-radius: 20px; background: white; color: #111; font-size: 16px; } label:focus-within { color: #333; } input:focus { outline: 1px solid #333; }
+ui-button { display: block; margin-top: 15px; }.forgot { display: block; width: fit-content; margin: 28px auto 80px; color: #111; text-decoration: none; font-size: 17px; }.account-actions { display: grid; gap: 16px; }.facebook, .signup { min-height: 55px; border-radius: 999px; font-size: 17px; font-weight: 600; text-align: center; display: grid; place-items: center; text-decoration: none; cursor: pointer; }.facebook { border: 0; background: #f2f3f5; color: #111; }.facebook:first-letter { color: #1877f2; }.signup { border: 1px solid #0675f9; color: #0675f9; }.error { color: #ed4956; margin: 0; font-size: 13px; }.demo-credentials { color: #777; text-align: center; font-size: 12px; }.meta { color: #303842; text-align: center; font-size: 18px; margin-top: 28px; }
+@media (max-width: 800px) { .login-page { display: block; }.showcase { display: none; }.login-panel { min-height: 100vh; padding: 28px 22px; }.mobile-brand { display: flex; margin-bottom: 58px; }.login-card h1 { font-size: 21px; }.forgot { margin-bottom: 54px; } }
   

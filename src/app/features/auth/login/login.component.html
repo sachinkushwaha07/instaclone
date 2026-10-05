@@ -1,21 +1,38 @@
-    <div class="wrap">
-      <h1 class="logo">InstaClone</h1>
-
-      <form [formGroup]="form" (ngSubmit)="submit()">
-        <input formControlName="identifier" placeholder="Phone number, username, or email" autocomplete="username" />
-        <input formControlName="password" type="password" placeholder="Password" autocomplete="current-password" />
-
-        @if (errorMessage(); as msg) {
-          <p class="error">{{ msg }}</p>
-        }
-
-        <ui-button variant="primary" [disabled]="form.invalid" [loading]="submitting()">
-          Log in
-        </ui-button>
-      </form>
-
-      <p class="demo-credentials">Demo: <strong>demo&#64;instaclone.local</strong> / <strong>demo123</strong></p>
-
-      <p class="switch">Don't have an account? <a routerLink="/auth/register">Sign up</a></p>
+<main class="login-page">
+  <section class="showcase" aria-label="Share everyday moments">
+    <a class="brand" routerLink="/auth/login" aria-label="InstaClone home"><span class="brand-mark">◎</span> InstaClone</a>
+    <div class="hero-copy">See everyday moments from your <span>close friends.</span></div>
+    <div class="memory-stack" aria-hidden="true">
+      <div class="memory memory-left"></div>
+      <div class="memory memory-main"><span>♥</span><small>Share the moment</small></div>
+      <div class="memory memory-right"></div>
     </div>
+  </section>
+
+  <section class="login-panel">
+    <div class="login-card">
+      <div class="mobile-brand"><span class="brand-mark">◎</span> InstaClone</div>
+      <h1>Log into InstaClone</h1>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <label>
+          <span>Mobile number, username or email</span>
+          <input formControlName="identifier" autocomplete="username" />
+        </label>
+        <label>
+          <span>Password</span>
+          <input formControlName="password" type="password" autocomplete="current-password" />
+        </label>
+        @if (errorMessage(); as msg) { <p class="error">{{ msg }}</p> }
+        <ui-button variant="primary" [disabled]="form.invalid" [loading]="submitting()">Log in</ui-button>
+      </form>
+      <a class="forgot" href="#">Forgot password?</a>
+      <div class="account-actions">
+        <button type="button" class="facebook">● &nbsp; Log in with Facebook</button>
+        <a routerLink="/auth/register" class="signup">Create new account</a>
+      </div>
+      <p class="demo-credentials">Demo: <strong>demo&#64;instaclone.local</strong> / <strong>demo123</strong></p>
+      <p class="meta">∞ Meta</p>
+    </div>
+  </section>
+</main>
   
