@@ -16,5 +16,6 @@
     <a [routerLink]="['/profile', auth.user()?.username]" aria-label="Your profile">
       <ui-avatar [src]="auth.user()?.avatarUrl ?? null" [size]="28" [initials]="auth.initials()" />
     </a>
+    <button class="logout" type="button" (click)="logout()">Log out</button>
   </nav>
 </header>

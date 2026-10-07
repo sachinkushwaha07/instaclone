@@ -14,4 +14,7 @@
   <a [routerLink]="['/profile', auth.user()?.username]" routerLinkActive="active" aria-label="Your profile">
     <span class="me">{{ auth.initials() }}</span>
   </a>
+  <button type="button" (click)="logout()" aria-label="Log out">
+    <fa-icon [icon]="faRightFromBracket" />
+  </button>
 </nav>

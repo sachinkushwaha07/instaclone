@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
@@ -15,7 +16,7 @@ import { Post } from '../../../data-access/posts/post.model';
 @Component({
   selector: 'app-post-card',
   standalone: true,
-  imports: [NgOptimizedImage, AvatarComponent, TimeAgoPipe, FontAwesomeModule],
+  imports: [NgOptimizedImage, RouterLink, AvatarComponent, TimeAgoPipe, FontAwesomeModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './post-card.component.html',
   styleUrl: './post-card.component.scss',

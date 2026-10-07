@@ -7,7 +7,12 @@
             @if (u.isLive) {
               <span class="live-pill">LIVE</span>
             }
-            <ui-button [variant]="u.followedByMe ? 'secondary' : 'primary'" (clicked)="toggleFollow(u)">
+            <ui-button
+              [variant]="u.followedByMe ? 'secondary' : 'primary'"
+              [loading]="followPending()"
+              [disabled]="followPending()"
+              (clicked)="toggleFollow(u)"
+            >
               {{ u.followedByMe ? 'Following' : 'Follow' }}
             </ui-button>
           </div>

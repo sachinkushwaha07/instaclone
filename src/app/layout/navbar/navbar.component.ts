@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { AuthStore } from '../../core/auth/auth.store';
@@ -18,4 +18,10 @@ export class NavbarComponent {
   protected readonly auth = inject(AuthStore);
   protected readonly notifications = inject(NotificationsStore);
   protected readonly faBell = faBell;
+  private readonly router = inject(Router);
+
+  protected logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/auth/login']);
+  }
 }

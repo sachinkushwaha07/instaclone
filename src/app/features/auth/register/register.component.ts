@@ -40,7 +40,7 @@ export class RegisterComponent {
   );
 
   /** Show a field's error only after the user has touched it. */
-  protected showError(name: 'email' | 'username' | 'password'): boolean {
+  protected showError(name: 'email' | 'displayName' | 'username' | 'password'): boolean {
     const c = this.form.controls[name];
     return c.invalid && (c.dirty || c.touched);
   }
@@ -58,7 +58,12 @@ export class RegisterComponent {
       await this.auth.register(payload);
       this.router.navigateByUrl('/');
     } catch (e) {
-      this.serverError.set((e as ApiError).message ?? 'Could not create your account.');
+      const error = e as ApiError;
+      this.serverError.set(
+        error.status === 503
+          ? 'Sign-up is temporarily unavailable. Please try again shortly.'
+          : error.message ?? 'Could not create your account.'
+      );
     } finally {
       this.submitting.set(false);
     }

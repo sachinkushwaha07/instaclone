@@ -22,7 +22,21 @@ export function errorHandler(err: unknown, _req: Request, res: Response, _next: 
     return;
   }
 
+  if (isDatabaseUnavailable(err)) {
+    console.error('Database connection unavailable:', err);
+    res.status(503).json({ message: 'Registration is temporarily unavailable. Please try again shortly.' });
+    return;
+  }
+
   // Never leak internals (stack traces, SQL, file paths) to the client.
   console.error('Unhandled error:', err);
   res.status(500).json({ message: 'Something went wrong. Please try again.' });
+}
+
+/** pg may surface a connection failure directly or inside AggregateError. */
+function isDatabaseUnavailable(error: unknown): boolean {
+  if (!error || typeof error !== 'object') return false;
+  const candidate = error as { code?: unknown; errors?: unknown[] };
+  if (['ECONNREFUSED', 'ECONNRESET', 'ETIMEDOUT'].includes(String(candidate.code))) return true;
+  return candidate.errors?.some(isDatabaseUnavailable) ?? false;
 }

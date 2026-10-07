@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { StoriesApi } from '../../../data-access/stories/stories.api';
 import { StoryGroup } from '../../../data-access/stories/story.model';
@@ -15,6 +15,7 @@ import { StoryGroup } from '../../../data-access/stories/story.model';
 @Component({
   selector: 'app-story-viewer',
   standalone: true,
+  imports: [RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './story-viewer.component.html',
   styleUrl: './story-viewer.component.scss',

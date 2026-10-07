@@ -11,12 +11,12 @@ export class UsersApi {
     return this.http.get<UserProfile>(`/api/users/by-username/${username}`);
   }
 
-  follow(userId: string): Observable<void> {
-    return this.http.post<void>(`/api/users/${userId}/follow`, {});
+  follow(username: string): Observable<void> {
+    return this.http.post<void>(`/api/users/${encodeURIComponent(username)}/follow`, {});
   }
 
-  unfollow(userId: string): Observable<void> {
-    return this.http.delete<void>(`/api/users/${userId}/follow`);
+  unfollow(username: string): Observable<void> {
+    return this.http.delete<void>(`/api/users/${encodeURIComponent(username)}/follow`);
   }
 
   search(query: string): Observable<UserProfile[]> {

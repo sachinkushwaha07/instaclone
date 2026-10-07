@@ -1,10 +1,40 @@
-    <div class="wrap">
-      <input type="file" accept="image/*,video/*" (change)="onFile($event)" />
-      @if (fileName(); as name) {
-        <p>Selected: {{ name }}</p>
-        <textarea placeholder="Write a caption..." [(ngModel)]="caption" name="caption"></textarea>
-        @if (errorMessage(); as message) { <p class="error">{{ message }}</p> }
-        <ui-button [loading]="uploading()" (clicked)="share()">Share</ui-button>
+    <main class="composer" aria-labelledby="create-post-title">
+      <header class="composer-header">
+        <h1 id="create-post-title">Create new post</h1>
+        @if (fileName()) {
+          <button class="share" type="button" [disabled]="uploading()" (click)="share()">
+            {{ uploading() ? 'Sharing…' : 'Share' }}
+          </button>
+        }
+      </header>
+
+      @if (!fileName()) {
+        <label class="upload-area" for="post-media" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
+          <span class="media-icon" aria-hidden="true">▧</span>
+          <strong>Drag photos and videos here</strong>
+          <span class="hint">Share moments with the people who follow you</span>
+          <span class="select-button">Select from computer</span>
+          <input id="post-media" type="file" accept="image/*,video/*" (change)="onFile($event)" />
+        </label>
+      } @else {
+        <section class="editor" aria-label="Post editor">
+          <div class="preview">
+            @if (isVideo()) {
+              <video [src]="previewUrl()" controls playsinline></video>
+            } @else {
+              <img [src]="previewUrl()" alt="Selected post preview" />
+            }
+          </div>
+          <div class="details">
+            <div class="file-row">
+              <span class="file-name">{{ fileName() }}</span>
+              <button type="button" class="remove" (click)="removeFile()" [disabled]="uploading()">Remove</button>
+            </div>
+            <textarea [(ngModel)]="caption" name="caption" maxlength="2200" placeholder="Write a caption…" aria-label="Post caption"></textarea>
+            <div class="caption-footer"><span>{{ caption.length }} / 2,200</span><span>Add location</span></div>
+            @if (errorMessage(); as message) { <p class="error" role="alert">{{ message }}</p> }
+          </div>
+        </section>
       }
-    </div>
+    </main>
   

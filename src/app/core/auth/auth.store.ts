@@ -18,18 +18,6 @@ const initialState: AuthState = {
   error: null,
 };
 
-/** Frontend-only account for exercising the UI without an API server. */
-const demoCredentials = {
-  identifiers: ['demo', 'demo@instaclone.local'],
-  password: 'demo123',
-  user: {
-    id: 'demo-user',
-    username: 'demo',
-    displayName: 'Demo User',
-    avatarUrl: null,
-  } satisfies CurrentUser,
-};
-
 /**
  * Single source of truth for "who is logged in". Kept in core (not
  * features/auth) because the interceptor, route guards, and layout shell
@@ -46,16 +34,6 @@ export const AuthStore = signalStore(
     async login(payload: LoginPayload): Promise<void> {
       patchState(store, { status: 'loading', error: null });
       try {
-        const identifier = payload.identifier.trim().toLowerCase();
-        if (demoCredentials.identifiers.includes(identifier) && payload.password === demoCredentials.password) {
-          patchState(store, {
-            user: demoCredentials.user,
-            accessToken: 'demo-access-token',
-            status: 'authenticated',
-          });
-          return;
-        }
-
         const res = await firstValueFrom(http.post<AuthResponse>('/api/auth/login', payload));
         patchState(store, { user: res.user, accessToken: res.accessToken, status: 'authenticated' });
       } catch (e) {

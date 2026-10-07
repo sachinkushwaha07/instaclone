@@ -42,12 +42,25 @@ export const authService = {
     }
 
     const passwordHash = await hashPassword(input.password);
-    const user = await authRepository.createUser({
-      email: input.email,
-      username: input.username,
-      displayName: input.displayName,
-      passwordHash,
-    });
+    let user: UserRow;
+    try {
+      user = await authRepository.createUser({
+        email: input.email,
+        username: input.username,
+        displayName: input.displayName,
+        passwordHash,
+      });
+    } catch (error) {
+      // The pre-check above gives a friendly response in the usual case;
+      // this catches a second signup racing between that check and INSERT.
+      if (isUniqueViolation(error)) {
+        throw new HttpError(409, 'That email or username is already taken.', {
+          email: 'Already in use',
+          username: 'Already in use',
+        });
+      }
+      throw error;
+    }
     return issueTokens(user);
   },
 
@@ -97,3 +110,7 @@ export const authService = {
     if (record) await authRepository.revokeRefreshToken(record.id);
   },
 };
+
+function isUniqueViolation(error: unknown): boolean {
+  return typeof error === 'object' && error !== null && (error as { code?: string }).code === '23505';
+}

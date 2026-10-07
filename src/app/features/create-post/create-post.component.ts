@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -22,20 +22,41 @@ import { ButtonComponent } from '../../shared/ui/button/button.component';
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss',
 })
-export class CreatePostComponent {
+export class CreatePostComponent implements OnDestroy {
   private readonly api = inject(PostsApi);
   private readonly router = inject(Router);
 
   protected readonly fileName = signal<string | null>(null);
+  protected readonly previewUrl = signal<string | null>(null);
+  protected readonly isVideo = signal(false);
   protected readonly uploading = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected caption = '';
   private file: File | null = null;
+  private objectUrl: string | null = null;
 
   onFile(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.file = input.files?.[0] ?? null;
-    this.fileName.set(this.file?.name ?? null);
+    this.selectFile(input.files?.[0] ?? null);
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.selectFile(event.dataTransfer?.files[0] ?? null);
+  }
+
+  removeFile(): void {
+    this.selectFile(null);
+  }
+
+  private selectFile(file: File | null): void {
+    if (this.objectUrl) URL.revokeObjectURL(this.objectUrl);
+    this.file = file;
+    this.objectUrl = file ? URL.createObjectURL(file) : null;
+    this.fileName.set(file?.name ?? null);
+    this.previewUrl.set(this.objectUrl);
+    this.isVideo.set(file?.type.startsWith('video/') ?? false);
+    this.errorMessage.set(null);
   }
 
   async share(): Promise<void> {
@@ -54,5 +75,9 @@ export class CreatePostComponent {
     } finally {
       this.uploading.set(false);
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.objectUrl) URL.revokeObjectURL(this.objectUrl);
   }
 }

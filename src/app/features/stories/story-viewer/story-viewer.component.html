@@ -10,7 +10,8 @@
         @if (current(); as story) {
           <img [src]="story.mediaUrl" alt="" />
         }
-        <button class="close" (click)="close()">✕</button>
+        <a class="profile-link" [routerLink]="['/profile', g.user.username]">{{ g.user.username }}</a>
+        <button class="close" (click)="close()" aria-label="Close story viewer">✕</button>
       </div>
     }
   

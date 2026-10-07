@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faHouse, faMagnifyingGlass, faPlusSquare, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faMagnifyingGlass, faPlusSquare, faRightFromBracket, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { AuthStore } from '../../core/auth/auth.store';
 
 @Component({
@@ -14,8 +14,15 @@ import { AuthStore } from '../../core/auth/auth.store';
 })
 export class BottomNavComponent {
   protected readonly auth = inject(AuthStore);
+  private readonly router = inject(Router);
   protected readonly faHouse = faHouse;
   protected readonly faMagnifyingGlass = faMagnifyingGlass;
   protected readonly faPlusSquare = faPlusSquare;
   protected readonly faVideo = faVideo;
+  protected readonly faRightFromBracket = faRightFromBracket;
+
+  protected logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/auth/login']);
+  }
 }

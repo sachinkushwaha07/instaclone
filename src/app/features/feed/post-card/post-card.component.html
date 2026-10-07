@@ -1,14 +1,16 @@
 <article class="card">
   <header class="head">
-    <ui-avatar [src]="post().author.avatarUrl" [size]="32" [initials]="post().author.username[0]" />
-    <span class="username">{{ post().author.username }}</span>
+    <a class="author" [routerLink]="['/profile', post().author.username]" [attr.aria-label]="'View ' + post().author.username + '\u2019s profile'">
+      <ui-avatar [src]="post().author.avatarUrl" [size]="32" [initials]="post().author.username[0]" />
+      <span class="username">{{ post().author.username }}</span>
+    </a>
     <span class="time">{{ post().createdAt | timeAgo }}</span>
   </header>
 
   @if (post().media[0]; as media) {
-    <div class="media">
+    <a class="media" [routerLink]="['/p', post().id]" [attr.aria-label]="'Open post by ' + post().author.username">
       <img [ngSrc]="media.fullUrl" [width]="media.width" [height]="media.height" priority="false" alt="" />
-    </div>
+    </a>
   }
 
   <div class="actions">
