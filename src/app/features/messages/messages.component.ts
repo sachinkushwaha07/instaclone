@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ChatApi } from '../../data-access/chat/chat.api';
 import { ChatMessage, Conversation } from '../../data-access/chat/chat.model';
-import { WebSocketService } from '../../core/realtime/websocket.service';
 import { AuthStore } from '../../core/auth/auth.store';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 
@@ -22,9 +22,9 @@ import { ButtonComponent } from '../../shared/ui/button/button.component';
   templateUrl: './messages.component.html',
   styleUrl: './messages.component.scss',
 })
-export class MessagesComponent implements OnInit, OnDestroy {
+export class MessagesComponent implements OnInit {
   private readonly chatApi = inject(ChatApi);
-  private readonly ws = inject(WebSocketService);
+  private readonly route = inject(ActivatedRoute);
   protected readonly auth = inject(AuthStore);
 
   protected readonly conversations = signal<Conversation[]>([]);
@@ -34,39 +34,28 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.conversations.set(await firstValueFrom(this.chatApi.conversations()));
-    this.ws.connect('wss://realtime.example.com/chat');
-    this.ws.on<ChatMessage>('message').subscribe((msg) => {
-      if (msg.conversationId === this.activeId()) {
-        this.messages.update((list) => [...list, msg]);
+    const recipient = this.route.snapshot.queryParamMap.get('recipient');
+    if (recipient) {
+      const conversation = await firstValueFrom(this.chatApi.createConversation(recipient));
+      if (!this.conversations().some((item) => item.id === conversation.id)) {
+        this.conversations.update((items) => [conversation, ...items]);
       }
-    });
+      await this.openThread(conversation.id);
+    }
   }
 
   async openThread(conversationId: string): Promise<void> {
     this.activeId.set(conversationId);
-    const page = await firstValueFrom(this.chatApi.messages(conversationId, null));
-    this.messages.set(page.items);
+    this.messages.set(await firstValueFrom(this.chatApi.messages(conversationId)));
   }
 
-  send(): void {
+  async send(): Promise<void> {
     const conversationId = this.activeId();
     const text = this.draft.trim();
     if (!conversationId || !text) return;
 
-    const optimistic: ChatMessage = {
-      id: `local-${Date.now()}`,
-      conversationId,
-      senderId: this.auth.user()?.id ?? '',
-      text,
-      createdAt: new Date().toISOString(),
-      status: 'sending',
-    };
-    this.messages.update((list) => [...list, optimistic]);
-    this.ws.send({ type: 'message', payload: { conversationId, text, clientId: optimistic.id } });
+    const message = await firstValueFrom(this.chatApi.send(conversationId, text));
+    this.messages.update((list) => [...list, message]);
     this.draft = '';
-  }
-
-  ngOnDestroy(): void {
-    this.ws.disconnect();
   }
 }

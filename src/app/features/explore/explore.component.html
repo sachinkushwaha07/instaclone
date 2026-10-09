@@ -1,1 +1,21 @@
-<div class="placeholder">Explore grid goes here.</div>
+<main class="explore">
+  <h1>Discover people</h1>
+  <p>Find people by name or username, then visit their profile to follow or message them.</p>
+  <form (ngSubmit)="search()">
+    <input [(ngModel)]="query" name="query" placeholder="Search people" aria-label="Search people" />
+    <button type="submit" [disabled]="loading()">{{ loading() ? 'Searching…' : 'Search' }}</button>
+  </form>
+
+  @if (searched() && !loading() && !results().length) {
+    <p class="empty">No people found for “{{ query }}”.</p>
+  }
+  <div class="results">
+    @for (user of results(); track user.id) {
+      <a class="person" [routerLink]="['/profile', user.username]">
+        <ui-avatar [src]="user.avatarUrl" [size]="48" [initials]="user.username[0]" />
+        <span><strong>{{ user.username }}</strong><small>{{ user.displayName }}</small></span>
+        <span class="view">View profile</span>
+      </a>
+    }
+  </div>
+</main>

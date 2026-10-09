@@ -7,14 +7,17 @@
             @if (u.isLive) {
               <span class="live-pill">LIVE</span>
             }
-            <ui-button
-              [variant]="u.followedByMe ? 'secondary' : 'primary'"
-              [loading]="followPending()"
-              [disabled]="followPending()"
-              (clicked)="toggleFollow(u)"
-            >
-              {{ u.followedByMe ? 'Following' : 'Follow' }}
-            </ui-button>
+            @if (u.id !== auth.user()?.id) {
+              <ui-button
+                [variant]="u.followedByMe ? 'secondary' : 'primary'"
+                [loading]="followPending()"
+                [disabled]="followPending()"
+                (clicked)="toggleFollow(u)"
+              >
+                {{ u.followedByMe ? 'Following' : 'Follow' }}
+              </ui-button>
+              <a class="message-link" [routerLink]="'/messages'" [queryParams]="{ recipient: u.id }">Message</a>
+            }
           </div>
           <div class="stats">
             <span><strong>{{ u.postCount }}</strong> posts</span>

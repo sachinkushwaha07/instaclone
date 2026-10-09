@@ -26,7 +26,7 @@ function selectPostFields(viewerParam: number): string {
   p.id, p.caption, p.created_at, p.author_id,
   u.username AS author_username, u.avatar_url AS author_avatar_url,
   (SELECT count(*)::int FROM likes l WHERE l.post_id = p.id) AS like_count,
-  0 AS comment_count,
+  (SELECT count(*)::int FROM comments c WHERE c.post_id = p.id) AS comment_count,
   ($${viewerParam}::uuid IS NOT NULL AND EXISTS (SELECT 1 FROM likes l WHERE l.post_id = p.id AND l.user_id = $${viewerParam})) AS liked_by_me,
   COALESCE(
     (SELECT json_agg(json_build_object(

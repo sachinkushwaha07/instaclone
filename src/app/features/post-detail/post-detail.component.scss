@@ -1,0 +1,10 @@
+.comments { max-width: 620px; margin: 0 auto; padding: 16px; border-top: 1px solid var(--color-border); }
+h2 { font-size: 16px; margin: 0 0 12px; }
+p { font-size: 14px; margin: 8px 0; }
+a { color: var(--color-text); font-weight: 700; text-decoration: none; }
+.empty { color: var(--color-text-muted); }
+form { display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid var(--color-border); padding-top: 12px; }
+input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--color-text); font: inherit; outline: 0; }
+button { border: 0; background: transparent; color: var(--color-accent); cursor: pointer; font-weight: 700; }
+button:disabled { color: var(--color-text-muted); cursor: default; }
+.error { color: var(--color-danger); }

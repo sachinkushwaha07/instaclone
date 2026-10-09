@@ -136,10 +136,12 @@ All API routes are prefixed with `/api`. Protected routes require a bearer acces
 | Health | `GET /healthz` |
 | Authentication | `POST /auth/register`, `/auth/login`, `/auth/refresh`, `/auth/logout` |
 | Feed and posts | `GET /feed`, `GET /posts/:postId`, `POST /posts`, `POST/DELETE /posts/:postId/like` |
+| Comments | `GET /posts/:postId/comments`, `POST /posts/:postId/comments` |
 | Profiles and follows | `GET /users/by-username/:username`, `GET /users/search`, `GET /users/:userId/posts`, `POST/DELETE /users/:username/follow` |
 | Stories | `GET /stories/tray`, `POST /stories`, `POST /stories/seen` |
 | Media | `POST /media/presign`, `PUT /media/upload/:key`, `GET /media/files/:key` |
 | Notifications | `GET /notifications`, `POST /notifications/read-all` |
+| Direct messages | `GET/POST /conversations`, `GET/POST /conversations/:conversationId/messages` |
 
 ## Media uploads
 

@@ -7,6 +7,8 @@ import morgan from 'morgan';
 import { env } from './config/env';
 import { errorHandler } from './middleware/error.middleware';
 import { authRouter } from './modules/auth/auth.routes';
+import { commentsRouter } from './modules/comments/comments.routes';
+import { chatRouter } from './modules/chat/chat.routes';
 import { notificationsRouter } from './modules/notifications/notifications.routes';
 import { mediaRouter, mediaUploadsDirectory } from './modules/media/media.routes';
 import { postsRouter } from './modules/posts/posts.routes';
@@ -51,6 +53,8 @@ export function createApp(): Express {
   app.use('/api/media/files', express.static(mediaUploadsDirectory));
   app.use('/api', mediaRouter);
   app.use('/api', postsRouter);
+  app.use('/api', commentsRouter);
+  app.use('/api', chatRouter);
   app.use('/api', usersRouter);
   app.use('/api', notificationsRouter);
   app.use('/api', storiesRouter);

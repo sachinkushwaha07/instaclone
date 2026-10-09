@@ -1,5 +1,17 @@
     @if (post(); as p) {
       <app-post-card [post]="p" (like)="onLike($event)" />
+      <section class="comments" aria-label="Comments">
+        <h2>Comments</h2>
+        @for (comment of comments(); track comment.id) {
+          <p><a [routerLink]="['/profile', comment.author.username]">{{ comment.author.username }}</a> {{ comment.text }}</p>
+        } @empty {
+          <p class="empty">No comments yet. Start the conversation.</p>
+        }
+        <form (ngSubmit)="addComment(p.id)">
+          <input [(ngModel)]="commentText" name="comment" maxlength="1000" placeholder="Add a comment…" aria-label="Add a comment" />
+          <button type="submit" [disabled]="!commentText.trim() || sendingComment()">Post</button>
+        </form>
+        @if (commentError(); as error) { <p class="error" role="alert">{{ error }}</p> }
+      </section>
     }
-    <!-- TODO: comments thread, loaded via a paginated CommentsApi -->
   

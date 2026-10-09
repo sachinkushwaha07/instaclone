@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChatMessage, Conversation } from './chat.model';
-import { Page } from '../page.model';
 
 @Injectable({ providedIn: 'root' })
 export class ChatApi {
@@ -12,12 +11,16 @@ export class ChatApi {
     return this.http.get<Conversation[]>('/api/conversations');
   }
 
-  messages(conversationId: string, cursor: string | null): Observable<Page<ChatMessage>> {
-    return this.http.get<Page<ChatMessage>>(`/api/conversations/${conversationId}/messages`, {
-      params: cursor ? { cursor } : {},
-    });
+  messages(conversationId: string): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(`/api/conversations/${conversationId}/messages`);
   }
 
-  // Sending itself happens over the WebSocket (see WebSocketService) for
-  // low latency; this REST call is only the history fetch on thread open.
+  createConversation(participantId: string): Observable<Conversation> {
+    return this.http.post<Conversation>('/api/conversations', { participantId });
+  }
+
+  send(conversationId: string, text: string): Observable<ChatMessage> {
+    return this.http.post<ChatMessage>(`/api/conversations/${conversationId}/messages`, { text });
+  }
+
 }

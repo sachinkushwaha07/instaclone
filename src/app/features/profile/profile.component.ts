@@ -9,6 +9,7 @@ import { AvatarComponent } from '../../shared/ui/avatar/avatar.component';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
 import { Post } from '../../data-access/posts/post.model';
+import { AuthStore } from '../../core/auth/auth.store';
 
 /**
  * The post grid below reuses the same cursor-pagination + IntersectionObserver
@@ -34,6 +35,7 @@ export class ProfileComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly usersApi = inject(UsersApi);
   private readonly postsApi = inject(PostsApi);
+  protected readonly auth = inject(AuthStore);
 
   protected readonly user = signal<UserProfile | null>(null);
   protected readonly posts = signal<Post[]>([]);
